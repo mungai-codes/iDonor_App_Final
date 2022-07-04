@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en"
+xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>List of BloodTypes</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+</head>
+<body>
+<div></div>
+<div class="container text-center">
+    <h1 class="h1">A List of Blood Types</h1>
+    <h2 class="h2"><a class="link-info" th:href="@{/createBloodType}">Add BloodType</a></h2>
+  <table class="table table-bordered">
+  <thead class="table-dark">
+  <tr>
+      <th>ID</th>
+      <th>Name</th>
+  </thead>
+  <tbody>
+  <tr th:each="bloodtype : ${listBloodTypes}">
+      <td th:text="${bloodtype.id}">BloodType ID</td>
+      <td th:text="${bloodtype.name}">BloodType NAME</td>
+  </tr>
+  </tbody>
+  </table>
+</div>
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>View Appeals</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body class="img-fluid" th:style="'background-image: url(/images/hand-droplet.jpg);background-attachment: fixed; background-size: cover; background-position: center'">
+<header style="font-family: Courier,Bahnschrift,Serif,'Baskerville Old Face'">
+    <nav class="navbar mt-3 mx-5 navbar-expand-lg navbar-light" style="background-color: darkslategrey">
+        <div class="container-fluid">
+            <a class="navbar-brand pe-5" th:href="@{/admin/dashboard/appeal-manager}" href="#" style="font-family: Courier,Bahnschrift,Serif,'Baskerville Old Face',sans-serif; color: dodgerblue">admin-dashboard..appeal-manager</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active ps-1" th:href="@{/admin/dashboard}">
+                            <i class="fas fa-backward"><span> Home</span></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <form th:action="@{/admin/logout}" method="post" id="my_form">
+                            <a class="nav-link active ps-1" href="javascript:{}" onclick="document.getElementById('my_form').submit(); return false;"><i class="fas fa-sign-out-alt"> Sign Out:</i></a>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<div class="container text-center container-fluid mt-5">
+    <table class="table table-bordered table-striped" id="appealTable" style="font-family: 'Baskerville Old Face',Serif,Times; color: green">
+        <caption>appeal-management</caption>
+        <thead class="thead-dark">
+        <tr style="font-family: 'Baskerville Old Face',Serif,Times; color: dodgerblue">
+            <td>
+                ID
+                <i class="fas fa-id-card"></i>
+            </td>
+            <td>Recipient Name</td>
+            <td>Age</td>
+            <td>Blood Type</td>
+            <td>Address</td>
+            <td>Description</td>
+            <td>Status</td>
+            <td>Approve</td>
+            <td>Reject</td>
+            <td>Delete</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="appeal : ${appealList}">
+            <td th:text="${appeal.id}">ID</td>
+            <td th:text="${appeal.recipientName}">RECIPIENT NAME</td>
+            <td th:text="${appeal.recipientAge}">AGE</td>
+            <td th:text="${appeal.bloodType.name}">BLOOD TYPE</td>
+            <td>
+                <span th:text="${appeal.recipientAddress.county}">COUNTY</span>
+                <span th:text="${appeal.recipientAddress.subCounty}">SUB COUNTY</span>
+                <span th:text="${appeal.recipientAddress.ward}">WARD</span>
+            </td>
+            <td>
+                <a data-toggle="modal" data-target="#descriptionModal" th:attrappend="data-target=${appeal.id}" style="padding-left: 10px"><i class="fas fa-sticky-note"></i> View-Description</a>
+                <div class="modal fade" th:attrappend="id=${appeal.id}" id="descriptionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header text-center">
+                                <h4 class="modal-title w-100 font-weight-bold" style="font-family: 'Baskerville Old Face',sans-serif">User Info</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div style="padding:10px">
+                                <form autocomplete="off" action="#" method="post">
+                                    <div class="modal-footer d-flex justify-content-center">
+                                        <div class="row container-fluid text-center">
+                                            <i class="fas fa-pencil-alt prefix"></i>
+                                            <label for="desc">Description</label>
+                                            <textarea class="form-control md-textarea" rows="3" id="desc" th:text="${appeal.description}" name="description" readonly></textarea>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </td>
+            <td>
+                    <span th:if="${appeal.approved}">
+                        <i class="fas fa-check-circle" style="color: darkgreen"></i>
+                    </span>
+                <span th:unless="${appeal.approved}">
+                        <i class="fas fa-times-circle" style="color: darkblue"></i>
+                    </span>
+            </td>
+            <td>
+                <form action="#" th:action="@{/all/update/{id}(id=${appeal.id})}"  method="post">
+                    <button type="submit" class="bg-success btn-sm">
+                        <i class="fas fa-check-square"></i>
+                    </button>
+                </form>
+            </td>
+            <td>
+                <form action="#" th:action="@{/all/reject/{id}(id=${appeal.id})}"  method="post">
+                    <button type="submit" class="bg-danger btn-sm">
+                        <i style="color: darkred" class="fas fa-cross"></i>
+                    </button>
+                </form>
+            </td>
+            <td>
+                <a th:href="@{/admin/deleteAppeal/{id}(id=${appeal.id})}"  onclick="return confirm('Are you sure you want to delete this item?');" class="fas fa-trash"></a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+
+</body>
+<script>
+    $(document).ready(function () {
+        $('#appealTable').DataTable({
+            "dom": "tp",
+            "ordering": true,
+            "pagingType": "simple",
+            "lengthMenu": [ 5 ],
+            "className": "text-center"
+        });
+    });
+</script>
+</html>

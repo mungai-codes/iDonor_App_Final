@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>IDonor User Management</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+</head>
+<body  class="img-fluid" th:style="'background-image: url(/images/user-management.jpg);background-attachment: fixed; background-size: cover; background-position: center'">
+<div>
+    <div style="font-family: Courier,Bahnschrift,Serif,'Baskerville Old Face'">
+        <nav class="navbar mt-3 mx-5 navbar-expand-lg navbar-light" style="background-color: darkslategrey">
+            <div class="container-fluid">
+                <a class="navbar-brand pe-5" href="#" style="font-family: Courier,Bahnschrift,Serif,'Baskerville Old Face'; color: dodgerblue">iDONOR..User-Management</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active ps-2" th:href="@{/admin/dashboard}">
+                                <i class="fas fa-backward"><span> Home</span></i>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active ps-2" data-toggle="modal" data-target="#modalPendingList"href="#">
+                                <i class="fas fa-toolbox"><span>pending-approval</span></i>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <form th:action="@{/admin/logout}" method="post" id="my_form">
+                                <a class="nav-link active ps-1" href="javascript:{}" onclick="document.getElementById('my_form').submit(); return false;"><i class="fas fa-sign-out-alt"> Sign Out:</i></a>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+ </div>
+</div>
+<div>
+
+<div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div style="margin: 40px; width: auto">
+                    <input type="text" class="column_filter form-control input-lg" id="myInput" size="40">
+                    <table class="table display nowrap table-striped" id="approvedTable" style="font-family: 'Baskerville Old Face',Serif,Times; color: green">
+                        <caption>List-of-approved users</caption>
+                        <thead class="thead-dark">
+                        <tr style="font-family: 'Baskerville Old Face',Serif,Times; color: dodgerblue">
+                            <td><i class="fas fa-fingerprint"> ID</i></td>
+                            <td><i class="fas fa-envelope-open"> EMAIL</i></td>
+                            <td><i class="fas fa-info-circle"> Blood-Type</i></td>
+                            <td><i class="fas fa-lightbulb"> STATUS</i></td>
+                            <td><i class="fas fa-cogs"> MANAGE</i></td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="donor : ${approvedDonors}">
+                            <td>
+                                <p th:text="${donor.id}"></p>
+                            </td>
+                            <td>
+                                <p th:text=${donor.email}></p>
+                            </td>
+                            <td>
+                                <p th:text="${donor.bloodType.name}"></p>
+                            </td>
+                            <td>
+                            <span th:if="${donor.enabled}">
+                                <i class="fas fa-check-circle" style="color: darkgreen"></i>
+                            </span>
+                                <span th:unless="${donor.enabled}">
+                                 <i class="fas fa-times-circle" style="color: darkblue"></i>
+                            </span>
+                            </td>
+                            <td>
+                                <a data-toggle="modal"  style="color: dodgerblue" data-target="#myModal" th:attrappend="data-target=${donor.id}"><i class="fas fa-sticky-note" style="color: mediumseagreen"><span style="color: mediumseagreen;font-family: Courier,Bahnschrift,serif"> Print:</span></i></a>
+                               <div id="printThis">
+                                   <div class="modal fade" id="myModal" role="dialog" th:attrappend="id=${donor.id}">
+                                       <div class="modal-dialog" role="document">
+                                           <div class="modal-content">
+                                               <div class="modal-header text-center">
+                                                   <h4 class="modal-title w-100 font-weight-bold" style="font-family: 'Baskerville Old Face',sans-serif">User Info</h4>
+                                                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                       <span aria-hidden="true">&times;</span>
+                                                   </button>
+                                               </div>
+                                               <div style="padding:10px">
+                                                   <div id="print-content">
+                                                       <form style="font-family: Courier,Bahnschrift,serif">
+                                                           <div>
+                                                               <hr/>
+                                                               <p class="text-center">Personal Details</p>
+                                                               <hr/>
+                                                               <div class="form-row">
+                                                                   <div class="col">
+                                                                       <label for="email">Email: </label>
+                                                                       <p id="email" class="no-border" th:text="${donor.email}" th:value="${donor.email}"></p>
+                                                                   </div>
+                                                                   <div class="col">
+                                                                       <label for="firstname">First-Name: </label>
+                                                                       <p id="firstname" class="no-border" th:text="${donor.firstName}"></p>
+                                                                   </div>
+                                                                   <div class="col">
+                                                                       <label for="surname">Surname: </label>
+                                                                       <p id="surname" class="no-border" th:text="${donor.surname}"></p>
+                                                                   </div>
+                                                               </div>
+                                                               <hr/>
+                                                               <p class="text-center">More Details</p>
+                                                               <hr/>
+                                                               <div class="form-row">
+                                                                   <div class="col">
+                                                                       <label for="dob">Date-of-Birth </label>
+                                                                       <p  id="dob" class="no-border" th:text="${donor.dateOfBirth}"></p>
+                                                                   </div>
+
+                                                                   <div class="col">
+                                                                       <label for="gender">Gender: </label>
+                                                                       <p id="gender" class="no-border" th:text="${donor.gender}"></p>
+                                                                   </div>
+                                                                   <div class="col">
+                                                                       <label for="phone">Phone-Number: </label>
+                                                                       <p id="phone" class="no-border" th:text="${donor.phoneNumber}"></p>
+                                                                   </div>
+                                                               </div>
+                                                               <hr/>
+                                                               <p class="text-center">Address</p>
+                                                               <hr/>
+                                                               <div class="form-row">
+                                                                   <div class="col">
+                                                                       <label for="county">Ward: </label>
+                                                                       <p  id="county" class="no-border" th:text="${donor.address.county}"></p>
+                                                                   </div>
+
+                                                                   <div class="col">
+                                                                       <label for="subCounty">Sub-County: </label>
+                                                                       <p id="subCounty" class="no-border" th:text="${donor.address.subCounty}"></p>
+                                                                   </div>
+                                                                   <div class="col">
+                                                                       <label for="ward">Ward: </label>
+                                                                       <p id="ward" class="no-border typewriter" th:text="${donor.address.ward}"></p>
+                                                                   </div>
+                                                               </div>
+                                                           </div>
+                                                       </form>
+                                                   </div>
+                                                   <div class="modal-footer d-flex justify-content-center">
+                                                       <div class="row container-fluid text-center">
+                                                           <div>
+                                                               Authenticated as: <span th:text="${#authentication.name}"></span>
+                                                           </div>
+                                                           <div>
+                                                               Role: <span th:text="${#authentication.authorities}"></span>
+                                                           </div>
+                                                       </div>
+                                                       <div>
+                                                           <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+<!--                                                           <input type="button" onclick="printDiv('print-content')" value="print"/>-->
+                                                           <a class="fas fa-print" onclick="printDiv('print-content')"></a>
+<!--                                                           <button id="btnPrint" type="button" class="btn btn-secondary">Print</button>-->
+                                                       </div>
+                                                   </div>
+                                               </div>
+
+                                           </div>
+                                       </div>
+                                   </div>
+                               </div>
+                                <form action="#" th:action="@{/disableDonor/{id}(id=${donor.id})}" id="disable" method="post">
+                                    <a  href="javascript:{}" onclick="document.getElementById('disable').submit(); return false;">
+                                        <i class="fas fa-ban" style="color: darkorange"><span style="color: darkorange;font-family: Courier,Bahnschrift,serif"> Disable:</span></i>
+                                    </a>
+                                </form>
+                                <a th:href="@{/admin/deleteDonor/{id}(id=${donor.id})}"  onclick="return confirm('Are you sure you want to delete this item?');"><i class="fas fa-trash" style="color: darkred"><span style="color: darkred;font-family: Courier,Bahnschrift,serif"> Delete:</span></i></a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div>
+    <div class="modal fade" id="modalPendingList" tabindex="-1" data-keyboard="false" data-backdrop="static" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" style="width: inherit">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <h4 class="modal-title w-100 font-weight-bold" style="font-family: 'Baskerville Old Face',sans-serif">User Approval</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body container-fluid">
+                    <hr/>
+                    <hr/>
+                        <table class="table table-bordered table-striped display nowrap" id="pending_approval" style="font-family: 'Baskerville Old Face',Serif,Times; color: green;width: 100%">
+                            <caption>pending-approval....</caption>
+                            <thead>
+                            <tr style="font-family: 'Baskerville Old Face',Serif,Times; color: dodgerblue">
+                                <td><i class="fas fa-fingerprint"> ID</i></td>
+                                <td><i class="fas fa-envelope-open"> EMAIL</i></td>
+                                <td><i class="fas fa-info-circle"> Blood-Type</i></td>
+                                <td><i class="fas fa-lightbulb"> STATUS</i></td>
+                                <td><i class="fas fa-cogs"> MANAGE</i></td>
+                            </tr>
+                            </thead>
+                            <tbody >
+                            <tr th:each="donor : ${pending}">
+                                <td>
+                                    <p th:text="${donor.id}"></p>
+                                </td>
+                                <td>
+                                    <p th:text=${donor.email}></p>
+                                </td>
+                                <td>
+                                    <p th:text="${donor.bloodType.name}"></p>
+                                </td>
+                                <td>
+                                <span th:if="${donor.enabled}">
+                                    <i class="fas fa-check-circle" style="color: darkgreen"></i>
+                                </span>
+                                    <span th:unless="${donor.enabled}">
+                                    <i class="fas fa-times-circle" style="color: darkblue"></i>
+                                </span>
+                                </td>
+                                <td>
+                                    <a data-toggle="modal" data-target="#donorDetailsModal" th:attrappend="data-target=${donor.id}">
+                                        <i class="fas fa-info-circle" style="color: darkgoldenrod"><span style="color: darkgoldenrod;font-family: Courier,Bahnschrift,serif"> Details:</span></i>
+                                    </a>
+                                    <div class="modal fade" th:attrappend="id=${donor.id}" id="donorDetailsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                                         aria-hidden="true">
+                                        <div class="modal-dialog" role="document" style="width: 400px">
+                                            <div class="modal-content">
+                                                <div class="modal-header text-center">
+                                                    <h4 class="modal-title w-100 font-weight-bold" style="font-family: 'Baskerville Old Face',sans-serif">User Info</h4>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div style="padding:10px">
+                                                    <form autocomplete="off" action="#" method="post">
+                                                        <div class="modal-footer d-flex justify-content-center">
+                                                            <div class="row container-fluid text-center" style="font-family: Courier,Bahnschrift,sans-serif">
+                                                                <div>
+                                                                    DateOfBirth: <span th:text="${donor.dateOfBirth}"></span>
+                                                                </div>
+                                                                <div>
+                                                                    Gender: <span th:text="${donor.gender}"></span>
+                                                                </div>
+                                                                <div>
+                                                                    PhoneNumber: <span th:text="${donor.phoneNumber}"></span>
+                                                                </div>
+                                                                <div>
+                                                                   BloodType: <span th:text="${donor.bloodType.name}"></span>
+                                                                </div>
+                                                                <div>
+                                                                    County: <span th:text="${donor.address.county}"></span>
+                                                                    &nbsp;
+                                                                    SubCounty: <span th:text="${donor.address.subCounty}"></span>
+                                                                </div>
+                                                                <div>
+                                                                    Ward: <span th:text="${donor.address.ward}"></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                   <form action="#" th:action="@{/enableDonor/{id}(id=${donor.id})}" id="enable"  method="post">
+                                       <a  href="javascript:{}" onclick="document.getElementById('enable').submit(); return false;">
+                                           <i class="fas fa-check" style="color: mediumseagreen"><span style="color: mediumseagreen;font-family: Courier,Bahnschrift,serif"> Enable:</span></i>
+                                       </a>
+                                       <a th:href="@{/admin/deleteDonor/{id}(id=${donor.id})}"  onclick="return confirm('Are you sure you want to delete this item?');">
+                                           <i class="fas fa-trash" style="color: darkred"><span style="color: darkred;font-family: Courier,Bahnschrift,serif"> Delete:</span></i>
+                                       </a>
+                                   </form>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    <hr/>
+                    <hr/>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<style>
+    hr {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+        border: 0;
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+    }
+    .box_shadow{
+        width: auto;
+        height: auto;
+        background: white;
+        box-shadow: 0 4px 2px rgba(0,0,0,0.02), 0 8px 6px rgba(0,0,0,0.03), 0 16px 10px rgba(0,0,0,0.04), 0 26px 18px rgba(0,0,0,0.05);
+    }
+    .off{
+        font-style: italic;
+        font-weight: lighter;
+        font-family: "Baskerville Old Face","Times New Roman", Times, serif;
+        color: black;
+    }
+    .on{
+        font-family: "Baskerville Old Face","Times New Roman", Times, serif;
+        font-weight: bolder;
+        color: darkblue;
+    }
+</style>
+<script>
+    $(document).ready(function () {
+        let table =  $('#approvedTable').DataTable({
+            // "dom": "tp",
+            "ordering": false,
+            "pagingType": "full_numbers",
+            "lengthMenu": [ 3 ],
+            "searching": true,
+            "info": true,
+            "bLengthChange": false
+            // "className": "text-center"
+        });
+        $('#myInput').on( 'keyup', function () {
+            table.search( this.value ).draw();
+        } );
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        let table =  $('#pending_approval').DataTable({
+            "dom": "tpir",
+            "ordering": false,
+            "pagingType": "full_numbers",
+            "lengthMenu": [ 3 ],
+            "searching": true,
+            "className": "text-center"
+        });
+        $('#myInput').on( 'keyup', function () {
+            table.search( this.value ).draw();
+        } );
+    });
+</script>
+<script type="text/javascript">
+
+    document.getElementById("btnPrint").onclick = function (){
+        printElement(document.getElementById("printThis"));
+    }
+    function printElement(elem){
+        const domClone = elem.cloneNode(true);
+
+        let $printSection = document.getElementById("printSection");
+
+        if (!$printSection){
+            $printSection = document.createElement("div");
+            $printSection.id ="printSection";
+            document.body.appendChild($printSection);
+        }
+        $printSection.innerHTML ="";
+        $printSection.appendChild(domClone);
+        window.print();
+    }
+    $('form input[type=text]').each(function(){
+        $(this).attr('value', $(this).val());
+    })
+</script>
+<style>
+    @media screen and (min-width: 676px) {
+        .modal-dialog {
+            max-width: 1000px; /* New width for default modal */
+        }
+    }
+    .no-border{
+        border: 0;
+        box-shadow: none;
+        background-color: transparent;
+        resize: none;
+        outline: none;
+    }
+    .typewriter{
+        font-family: monospace, courier;
+        letter-spacing: .17em;
+        margin: 0 auto;
+        overflow: hidden;
+        white-space: nowrap;
+        padding-left: 3px;;
+        /*border-right: .17em solid pink;*/
+        animation: typing 3.5s steps(30,end);
+    }
+    @keyframes typing {
+        from{
+            width: 0;
+        }
+        to{
+            width: 60%;
+        }
+    }
+    @keyframes blinking-cusor {
+        from,
+    to{
+            border-color: transparent;
+        }
+        50%{
+            border-color: pink;
+        }
+    }
+
+    @media screen {
+        #printSection{
+            display: none;
+        }
+    }
+    @media print{
+        .modal-dialog {
+            max-width: 100%;
+            width: 100%;
+        }
+        body *{
+            visibility: hidden;
+            display: none;
+        }
+        #printSection, #printSection * {
+            visibility: visible;
+            display: block;
+        }
+        #printSection{
+            display: block;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+    }
+.dataTables_filter{
+    display: none;
+}
+</style>
+<script>
+    function printDiv(divName) {
+        let printContents = document.getElementById(divName).innerHTML;
+        w=window.open();
+        w.document.write(printContents);
+        w.print();
+        w.close();
+    }
+</script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" />
+<link href="https://cdn.datatables.net/scroller/2.0.0/css/scroller.jqueryui.min.css" />
+</html>

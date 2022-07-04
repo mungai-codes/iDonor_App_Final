@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>IDonor Paging</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css">
+    <link rel="stylesheet" type="text/css" href="https://datatables.net/media/css/site-examples.css">
+</head>
+<body>
+<div class="container container-fluid text-center mt-5">
+        <table class="table table-bordered box_shadow">
+            <caption style="font-family: 'Baskerville Old Face',sans-serif; color: dodgerblue">precise-appeals</caption>
+            <thead class="bg-dark">
+            <tr class="text-white">
+                <td>name</td>
+                <td>age</td>
+                <td>blood-type</td>
+                <td>county</td>
+                <td>sub-county</td>
+                <td>ward</td>
+                <td>action <span class="fas fa-bars"></span></td>
+            </tr>
+            </thead>
+            <tbody class="bg-light table-striped">
+            <tr th:each="appeal : ${pagingTest}">
+                <td th:text="${appeal.recipientName}">name</td>
+                <td th:text="${appeal.recipientAge}">age</td>
+                <td th:text="${appeal.bloodType.name}">blood-type</td>
+                <td th:text="${appeal.recipientAddress.county}">county</td>
+                <td th:text="${appeal.recipientAddress.subCounty}">sub-county</td>
+                <td th:text="${appeal.recipientAddress.ward}">ward</td>
+                <td></td>
+            </tr>
+            </tbody>
+        </table>
+        <hr/>
+        <div class="container-fluid">
+            <nav>
+                <ul class="pagination flex-wrap justify-content-center">
+                    <li class="page-item">
+                        <a class="page-link" style="font-family: 'Courier New',Serif">Total Items: [[${totalItems}]] - page [[${currentPage}]] of [[${totalPages}]]</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link  on active" tabindex="-1" th:if="${currentPage > 1}" th:href="@{/donor/dashboard/paging/(page=1)}">First</a>
+                        <span class="page-link off disabled" tabindex="-1" th:unless="${currentPage > 1} ? 'disabled'">First</span>
+                    </li>
+                    <li class="page-item" th:each="i : ${#numbers.sequence(1, totalPages)}" >
+                        <a class="page-link  on active" tabindex="-1" th:if="${i != currentPage}" th:href="@{/donor/dashboard/paging/(page=${i})}">[[${i}]]</a>
+                        <span class="page-link off disabled" tabindex="-1" th:unless="${i != currentPage}">[[${i}]]</span>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link  on active" tabindex="-1" th:if="${currentPage > 1}" th:href="@{/donor/dashboard/paging/(page=${currentPage - 1})}">Previous</a>
+                        <span class="page-link off disabled" tabindex="-1" th:unless="${currentPage > 1} ? 'disabled'" >Previous</span>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link  on active" tabindex="-1" th:if="${currentPage < totalPages}" th:href="@{/donor/dashboard/paging/(page=${currentPage + 1})}">Next</a>
+                        <span class="page-link off  disabled" th:unless="${currentPage < totalPages}">Next</span>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+</div>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-12">
+            <div style="margin: 40px; width: auto">
+                <input type="text" class="column_filter form-control input-lg" id="myInput" size="40">
+                <table class="table table-striped" id="aTable" style="font-family: 'Baskerville Old Face',Serif,Times; color: green">
+                    <caption>List-of-approved users</caption>
+                    <thead class="thead-dark">
+                    <tr style="font-family: 'Baskerville Old Face',Serif,Times; color: dodgerblue">
+                        <td><i class="fas fa-fingerprint"> ID</i></td>
+                        <td><i class="fas fa-envelope-open"> EMAIL</i></td>
+                        <td><i class="fas fa-info-circle"> Blood-Type</i></td>
+                        <td><i class="fas fa-lightbulb"> STATUS</i></td>
+                        <td><i class="fas fa-cogs"> MANAGE</i></td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="appeal : ${pagingTest}">
+                        <td th:text="${appeal.recipientName}">name</td>
+                        <td th:text="${appeal.recipientAge}">age</td>
+                        <td th:text="${appeal.bloodType.name}">blood-type</td>
+                        <td th:text="${appeal.recipientAddress.county}">county</td>
+                        <td th:text="${appeal.recipientAddress.subCounty}">sub-county</td>
+                        <td th:text="${appeal.recipientAddress.ward}">ward</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+<style>
+    hr {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+        width: inherit;
+        border: 0;
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+    }
+    .box_shadow{
+        width: inherit;
+        height: inherit;
+        background: white;
+        box-shadow: 0 4px 2px rgba(0,0,0,0.02), 0 8px 6px rgba(0,0,0,0.03), 0 16px 10px rgba(0,0,0,0.04), 0 26px 18px rgba(0,0,0,0.05);
+    }
+    .off{
+        font-style: italic;
+        font-weight: lighter;
+        font-family: "Baskerville Old Face","Times New Roman", Times, serif;
+        color: black;
+    }
+    .on{
+        font-family: "Baskerville Old Face","Times New Roman", Times, serif;
+        font-weight: bolder;
+        color: darkblue;
+    }
+</style>
+<script>
+    $(document).ready(function () {
+        let table =  $('#aTable').DataTable({
+            "dom": "tp",
+            "ordering": false,
+            "pagingType": "full_numbers",
+            "lengthMenu": [ 5 ],
+            "searching": true,
+            "className": "text-center"
+        });
+        $('#myInput').on( 'keyup', function () {
+            table.search( this.value ).draw();
+        } );
+    });
+</script>
+</html>

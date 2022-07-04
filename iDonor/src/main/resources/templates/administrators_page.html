@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Administrator's Page</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap-theme.min.css}"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</head>
+<body>
+<div>
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark ms-5 me-5 mt-5 mb-5">
+        <div class="navbar-collapse collapse w-100">
+            <ul class="navbar-nav nav-tabs me-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" th:href="@{/}"><i  class="fas fa-home"></i>HOME</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" th:href="@{/home}">HOME</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" th:href="@{/home}">HOME</a>
+                </li>
+            </ul>
+        </div>
+        <div class="mx-auto order-0">
+            <a class="navbar-brand mx-auto" href="#">Navbar</a>
+            <button class="navbar-toggler" type="button"
+                    data-toggle="collapse"
+                    data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse w-100 order-3">
+            <ul class="navbar-nav nav-tabs ms-auto">
+                <li class="nav-item">
+                    <form th:action="@{/administrators_page.html}">
+                        Filter: <input type="text" name="keyword" id="keyword" size="50" th:value="${keyword}" required />
+                        &nbsp;
+                        <input type="submit" value="Search" />
+                        &nbsp;
+                        <input type="button" value="Clear" id="btnClear" onclick="clearSearch()" />
+                    </form>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link ui-icon-note" th:href="@{/admin/adminlist}">Admins</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link ui-icon-person" href="#">Admin</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
+<div class="container container-fluid text-center mt-5">
+    <div class="text-center">
+        <table class="table table-bordered">
+            <thead class="bg-dark">
+                <tr class="text-white">
+                    <td>EMAIL</td>
+                    <td>FIRST-NAME</td>
+                    <td>SURNAME</td>
+                    <td>GENDER</td>
+                    <td>BLOOD-TYPE</td>
+                    <td class="bg-info"><span class="text-primary">ACTIONS</span></td>
+                </tr>
+            </thead>
+            <tbody class="bg-light">
+                <tr th:each="donors : ${listOfDonors}">
+                    <td th:text="${donors.email}">EMAIL</td>
+                    <td th:text="${donors.firstName}">FIRST-NAME</td>
+                    <td th:text="${donors.surname}">SURNAME</td>
+                    <td th:text="${donors.gender}">GENDER</td>
+                    <td th:text="${donors.bloodType.name}">BLOOD-TYPE</td>
+                    <td>
+                       <a th:href="@{/admin/adminlist}"><i class="fas fa-pen"></i>Edit</a>
+                        &nbsp;&nbsp;
+                        <a th:href="@{/admin/adminlist}"><i class="fas fa-sticky-note"></i>View</a>
+                        &nbsp;&nbsp;
+                        <button class="btn-danger" type="button"><i class="fas fa-trash"></i>Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="container-fluid text-center mt-3">
+    <table  class="table table-bordered">
+        <tbody th:each="donors : ${listOfDonors}">
+            <tr>
+                <th>Email</th>
+                <td th:text="${donors.email}"></td>
+            </tr>
+            <tr>
+                <th>Surname</th>
+                <td th:text="${donors.surname}"></td>
+            </tr>
+            <tr>
+                <th>Firstname</th>
+                <td th:text="${donors.firstName}"></td>
+            </tr>
+            <tr>
+                <th>Gender</th>
+                <td th:text="${donors.gender}"></td>
+            </tr>
+            <tr>
+                <th>Dob</th>
+                <td th:text="${donors.dateOfBirth}"></td>
+            </tr>
+            <tr>
+                <th>Phone Number</th>
+                <td th:text="${donors.phoneNumber}"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+<script>
+    function clearSearch(){
+        window.location = "[[@{/admin/dashboard}]]";
+    }
+</script>
+</html>

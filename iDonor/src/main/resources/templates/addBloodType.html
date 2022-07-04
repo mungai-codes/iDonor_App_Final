@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add a Blood Type</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+</head>
+<body>
+<div class="h1 text-center">Add a Blood Type</div>
+<form th:action="@{/bloodtypes/save}" th:object="${bloodType}" method="post" class="text-center align-content-center">
+    <table style="margin: auto" class="table table-bordered text-center">
+        <tr class="row">
+            <td class="text-decoration-line-through bg-dark text-white">BLOOD TYPE:</td>
+            <td><input class="text-info" required type="text" th:field="*{name}"></td>
+        </tr>
+        <tr class="row">
+            <td colspan="2"><button class="btn btn-primary" type="submit">Add BloodTYpe</button></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

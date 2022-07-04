@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8" http-equiv="Content-Type" content="text/html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <title>iDONOR login</title>\
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div class="container-fluid text-center">
+
+    <div>
+        <i class="fas fa-user">Admin</i>
+        <form th:action="@{/admin/login}" method="post" style="max-width: 350px; margin: 0 auto" autocomplete="off">
+            <p>Admin Access</p>
+
+            <div class="error" th:if="${param.error}">
+                <p class="text-danger">
+                    [[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]]
+                </p>
+            </div>
+            <div class="info" th:if="${param.logout}">
+                <p>You've been logged out</p>
+            </div>
+            <div class="border border-secondary p-3 rounded">
+                <p>
+                    <input type="text" name="text" class="form-control" placeholder="Username" required autofocus>
+                </p>
+                <p>
+                    <input type="password" name="password" class="form-control" placeholder="****" required>
+                </p>
+                <p>
+                    <input type="submit" value="login" class="btn btn-primary"/>
+                </p>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

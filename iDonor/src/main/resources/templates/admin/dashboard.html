@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>IDonor Admin Dashboard</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body class="img-fluid" th:style="'background-image: url(/images/admin-dashboard.jpg);background-attachment: fixed; background-size: cover; background-position: center'">
+<hr/>
+<hr/>
+<header style="font-family: Courier,Bahnschrift,Serif,'Baskerville Old Face'">
+    <nav class="navbar mt-3 mx-4 navbar-expand-lg navbar-light" style="background-color: darkslategrey">
+        <div class="container-fluid">
+            <a class="navbar-brand pe-3" href="#" style="font-family: Courier,Bahnschrift,'Baskerville Old Face',sans-serif; font-size: medium; color: dodgerblue">iDONOR..admin-dashboard</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item ps-1">
+                        <form th:action="@{/admin/dashboard}" class="d-flex pe-2" autocomplete="off" autofocus>
+                            <div class="input-group">
+                                <label for="bloodType-search"></label><input th:value="${b}" id="bloodType-search" name="bloodType" type="text" class="form-control" placeholder="Search..bloodtype" required>
+                                <label for="address-search"></label><input th:value="${a}" id="address-search" name="address" type="text" class="form-control" placeholder="Search..address" required>
+                                <input type="submit" class="btn fas fa-search btn-secondary"/>
+                                <input type="button" class="btn btn-danger" value="clear"/>
+                            </div>
+                        </form>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active ps-1" th:href="@{/}">
+                            <i class="fas fa-home"><span> Home</span></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link ps-1" th:href="@{/admin/dashboard/appeal-manager}" href="#">
+                            <i class="fas fa-hands-helping"><span> appeal-management</span></i>
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link ps-1 pe-1 dropdown-toggle" href="#" id="panelDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-cogs"><span style="font-family: Courier,Bahnschrift,serif"> Utility</span></i>
+                        </a>
+                        <ul class="dropdown-menu" style="min-width: auto" aria-labelledby="panelDropdown">
+                            <li>
+                                <a class="dropdown-item" data-toggle="modal" data-target="#modalAdminDetails"><i class="fas fa-user-cog"> :user-details</i></a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" data-toggle="modal" data-target="#modalBloodTypes"><i class="fas fa-plus-square"> :blood-types</i></a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" data-toggle="modal" data-target="#modalAdminControl"><i class="fas fa-wrench"> :admin-edit</i></a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link ps-1" th:href="@{/admin/dashboard/user_management}" href="#">
+                            <i class="fas fa-user-cog"><span> user-management</span></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <form th:action="@{/admin/logout}" method="post" id="my_form">
+                            <a class="nav-link active ps-1" href="javascript:{}" onclick="document.getElementById('my_form').submit(); return false;"><i class="fas fa-sign-out-alt"> Sign Out:</i></a>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+<hr/>
+<hr/>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div style="margin: 40px; width: 1200px">
+                <input type="text" class="column_filter form-control input-lg mb-2" id="myInput" size="40">
+                <p class="text-center" style="font-family: Courier, Bahnschrift,serif; font-size: large; color: orangered">Searching...@$#*</p>
+                <table class="table table-hover table-bordered table-striped" id="table_id">
+                    <caption style="font-family: Courier, Bahnschrift,serif; color: darkblue" class="font-weight-bold w-25">search results</caption>
+                    <thead class="thead-dark">
+                    <tr style="font-family: Courier,Bahnschrift,'Baskerville Old Face',serif; color: black; font-weight: bold; font-style: italic">
+                        <td><i class="fas fa-fingerprint"> ID</i></td>
+                        <td><i class="fas fa-envelope-open"> Email</i></td>
+                        <td><i class="fas fa-info"><i> First-Name</i></i></td>
+                        <td><i class="fas fa-info"> Surname</i></td>
+                        <td><i class="fas fa-person-booth"> Gender</i></td>
+                        <td><i class="fas fa-calendar"> Date-of-Birth</i></td>
+                        <td><i class="fas fa-info-circle"> Blood-Type</i></td>
+                        <td><i class="fas fa-phone-square-alt"> Phone-Number</i></td>
+                        <td><i class="fas fa-address-book"> Address</i></td>
+                        <td><i class="fas fa-paper-plane"> Contact</i></td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="info : ${search}" style="font-family: 'Courier New',sans-serif; color: midnightblue">
+                        <td>
+                            <p th:text="${info.id}"></p>
+                        </td>
+                        <td>
+                            <p th:text=${info.email}></p>
+                        </td>
+                        <td>
+                            <p th:text=${info.firstName}></p>
+                        </td>
+                        <td>
+                            <p th:text="${info.surname}"></p>
+                        </td>
+                        <td>
+                            <p th:text="${info.gender}"></p>
+                        </td>
+                        <td>
+                            <p th:text="${info.dateOfBirth}"></p>
+                        </td>
+                        <td>
+                            <p th:text="${info.bloodType.name}"></p>
+                        </td>
+                        <td>
+                            <p th:text="${info.phoneNumber}"></p>
+                        </td>
+                        <td>
+                            <span th:text="${info.address.county}">COUNTY</span>
+                            <span th:text="${info.address.subCounty}">SUB COUNTY</span>
+                            <span th:text="${info.address.ward}">WARD</span>
+                        </td>
+                        <td>
+                            <form action="#" th:action="@{/admin/messaging/{id}(id=${info.id})}"  method="post">
+                                <p>[[${hospital}]]</p>
+                                <label>
+                                    <input type="text" th:value="${b}" name="bloody" hidden/>
+                                </label>
+                                <button type="submit" class="bg-info btn-sm">
+                                    <i class="fas fa-sms"></i>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<hr/>
+<hr/>
+
+<div class="modal fade" id="modalBloodTypes" tabindex="-1" data-keyboard="false" data-backdrop="static" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" style="width: 560px">
+            <div class="modal-content row">
+                <div class="modal-header">
+                    <h5 class="modal-title">bloody-Utility</h5>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <form class="d-flex pe-3" th:action="@{/bloodtypes/save}" th:object="${bloodType}" method="post" >
+                                    <div class="input-group">
+                                        <input class="form-control" required type="text" th:field="*{name}" placeholder="blood-type">
+                                             <button class="btn btn-outline-success" type="submit"><i class="fas fa-paper-plane" aria-hidden="true"></i></button>
+                                    </div>
+                            </form>
+                        </div>
+                        <div class="col-md-6">
+                            <table style="font-family: Serif,'Baskerville Old Face';height: 60px; display: block; overflow-y:auto; overflow-x: hidden" class="table-sm table-striped">
+                                <tbody style="display: block" th:each="bloodtype : ${listBloodTypes}">
+                                <tr>
+                                    <th>id</th>
+                                    <td th:text="${bloodtype.id}"></td>
+                                    <th>blood-type</th>
+                                    <td th:text="${bloodtype.name}"></td>
+                                    <th>action</th>
+                                    <td><a th:href="@{/admin/dashboard}" class="fas fa-mail-bulk"></a></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <hr/>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Ok, I Understand</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<div class="modal fade" id="modalAdminControl" tabindex="-1" data-keyboard="false" data-backdrop="static" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" style="width: inherit">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Default Modal</h5>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                            <table class="table table-bordered table-striped table-hover">
+                                <thead class="table-dark">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>UserName</th>
+                                    <th>Email</th>
+                                    <th>Status</th>
+                                    <th>Enable</th>
+                                    <th>Disable</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="admins : ${listAdmins}">
+                                    <td th:text="${admins.id}">ADMIN ID</td>
+                                    <td th:text="${admins.username}">ADMIN USERNAME</td>
+                                    <td th:text="${admins.email}">ADMIN EMAIL</td>
+                                    <td>
+                                        <span th:if="${admins.enabled}">
+                                            <i class="fas fa-check-circle" style="color: darkgreen"></i>
+                                        </span>
+                                        <span th:unless="${admins.enabled}">
+                                             <i class="fas fa-times-circle" style="color: darkblue"></i>
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <form action="#" th:action="@{/enable/{id}(id=${admins.id})}"  method="post">
+                                            <button type="submit" class="bg-success btn-sm">
+                                                <i class="fas fa-check-square"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <form action="#" th:action="@{/disable/{id}(id=${admins.id})}"  method="post">
+                                            <button type="submit" class="bg-danger btn-sm">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                    <hr/>
+                    <div class="mt-2 card">
+                        <form th:action="@{/admin_save}" method="post" style="max-width: 600px; margin: auto;" th:object="${admin}" class="card-body">
+                               <div>
+                                   <div class="form-row">
+                                       <div class="col">
+                                           <label for="email">Email: </label>
+                                           <input id="email" type="email" class="form-control" th:field="*{email}" required/>
+                                       </div>
+                                       <div class="col">
+                                           <label for="username">Username: </label>
+                                           <input id="username" type="text" class="form-control" th:field="*{username}" required/>
+                                       </div>
+                                       <div class="col">
+                                           <label for="hospital">Hospital: </label>
+                                           <input id="hospital" type="text" class="form-control" th:field="*{hospital}" required/>
+                                       </div>
+                                       <div class="col">
+                                           <label for="pass">Password: </label>
+                                           <input id="pass" type="password" class="form-control" th:field="*{password}" required/>
+                                       </div>
+                                   </div>
+                                   <div class="text-center mt-3">
+                                       <button type="submit" class="btn btn-primary">Create Admin</button>
+                                   </div>
+                               </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<div class="modal fade" id="modalAdminDetails" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true" >
+        <div class="modal-dialog" role="document" style="width: 600px">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <h4 class="modal-title w-100 font-weight-bold" style="font-family:Courier,Bahnschrift,serif">User Info</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div style="padding:10px">
+                    <form autocomplete="off" action="#" method="post">
+
+                        <div class="modal-footer d-flex justify-content-center">
+                            <div class="row container-fluid text-center">
+                                <div>
+                                    Authenticated: <span th:text="${#authentication.authenticated}"></span>
+                                </div>
+                                <div>
+                                    Authenticated as: <span th:text="${#authentication.name}"></span>
+                                </div>
+                                <div>
+                                    Roles: <span th:text="${#authentication.authorities}"></span>
+                                </div>
+                                <div>
+                                    Email: <span th:text="${email}"></span>
+                                </div>
+                                <div>
+                                    Hospital: <span th:text="${c}"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</body>
+<style>
+    .dataTables_filter{
+        display: none;
+    }
+    hr {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+        border: 0;
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+    }
+    .box_shadow{
+        width: auto;
+        height: auto;
+        background: white;
+        box-shadow: 0 4px 2px rgba(0,0,0,0.02), 0 8px 6px rgba(0,0,0,0.03), 0 16px 10px rgba(0,0,0,0.04), 0 26px 18px rgba(0,0,0,0.05);
+    }
+
+</style>
+<script>
+    function clearSearch(){
+        window.location = "[[@{/admin/dashboard}]]";
+    }
+    const searchFocus = document.getElementById('search-bar');
+    const keys = [
+        { keyCode: 'AltLeft', isTriggered: false },
+        { keyCode: 'ControlLeft', isTriggered: false },
+    ];
+
+    window.addEventListener('keydown', (e) => {
+        keys.forEach((obj) => {
+            if (obj.keyCode === e.code) {
+                obj.isTriggered = true;
+            }
+        });
+
+        const shortcutTriggered = keys.filter((obj) => obj.isTriggered).length === keys.length;
+
+        if (shortcutTriggered) {
+            searchFocus.focus();
+        }
+    });
+
+    window.addEventListener('keyup', (e) => {
+        keys.forEach((obj) => {
+            if (obj.keyCode === e.code) {
+                obj.isTriggered = false;
+            }
+        });
+    });
+
+c
+    $('table > tbody > tr').each(function (index, tr){
+        console.log(index);
+        console.log(tr)
+    });
+    document.getElementById("submit").onclick = function (){
+        document.getElementById("").submit();
+    }
+</script>
+<style>
+    .dataTables_paginate {
+        float: left !important;
+    }
+</style>
+<style>
+    @media screen and (min-width: 400px) {
+        .modal-dialog {
+            max-width: 1000px; /* New width for default modal */
+        }
+    }
+</style>
+<script>
+    $(document).ready(function () {
+        let table =  $('#table_id').DataTable({
+            // "dom": "tp",
+            "ordering": false,
+            "pagingType": "full_numbers",
+            "lengthMenu": [ 3 ],
+            "searching": true,
+            "info": true,
+            "bLengthChange": false
+            // "className": "text-center"
+        });
+        $('#myInput').on( 'keyup', function () {
+            table.search( this.value ).draw();
+        } );
+    });
+</script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" />
+<link href="https://cdn.datatables.net/scroller/2.0.0/css/scroller.jqueryui.min.css" />
+</html>

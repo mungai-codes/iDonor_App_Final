@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Approved Users</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+
+<div>
+    <div class="mt-2 mx-5">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <a class="navbar-brand pe-5" href="#" style="font-family: 'Baskerville Old Face',sans-serif; color: dodgerblue">iDONOR..User-Management</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active ps-2" th:href="@{/admin/dashboard}">
+                                <i class="fas fa-home"><span> Home</span></i>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link ps-2"  th:href="@{/admin/dashboard/user-management/approved}" href="#">approved</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link ps-2" th:href="@{/admin/dashboard/user-management/all-users}" href="#">all-users</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link ps-5 pe-5 dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-user-circle"><span style="font-family: 'Baskerville Old Face',sans-serif"> User</span></i>
+                            </a>
+                            <ul class="dropdown-menu" style="min-width: auto" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" data-toggle="modal" data-target="#modalRegisterForm"><i class="fas fa-user"> Profile:</i></a></li>
+                                <li><a class="dropdown-item" data-toggle="modal" data-target="#modalEditForm"><i class="fas fa-edit"> Edit:</i></a></li>
+                                <li>
+                                    <form th:action="@{/admin/logout}" method="post" id="my_form">
+                                        <a class="dropdown-item" href="javascript:{}" onclick="document.getElementById('my_form').submit(); return false;"><i class="fas fa-sign-out-alt"> Sign Out:</i></a>
+                                    </form>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+</div>
+
+<div class="container-fluid text-center mt-3" style="width: 1000px;">
+    <table class="table table-bordered">
+        <caption style="font-family: 'Baskerville Old Face',sans-serif; color: dodgerblue">approved-users</caption>
+        <thead class="bg-dark">
+        <tr class="text-white">
+            <td>email</td>
+            <td>first-name</td>
+            <td>surname</td>
+            <td>gender</td>
+            <td>phone-number</td>
+            <td>blood-type</td>
+            <td>send-message</td>
+        </tr>
+        </thead>
+        <tbody class="bg-light table-striped">
+        <tr th:each="donor : ${approvedDonors}">
+            <td th:text="${donor.email}">email</td>
+            <td th:text="${donor.firstName}">first-name</td>
+            <td th:text="${donor.surname}">surname</td>
+            <td th:text="${donor.gender}">gender</td>
+            <td th:text="${donor.phoneNumber}">phone-number</td>
+            <td th:text="${donor.bloodType.name}">blood-type</td>
+            <td>
+                <form action="#" th:action="@{/miracle/{id}(id=${donor.id})}"  method="post">
+                    <button type="submit" class="bg-info btn-sm">
+                        <i class="fas fa-sms"></i>
+                    </button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <hr/>
+    <div class="container-fluid">
+        <nav>
+            <ul class="pagination flex-wrap justify-content-center">
+                <li class="page-item">
+                    <a class="page-link" style="font-family: 'Courier New',Serif">Total Items: [[${totalItems}]] - page [[${currentPage}]] of [[${totalPages}]]</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link  on active" tabindex="-1" th:if="${currentPage > 1}" th:href="@{/admin/dashboard/user-management/approved/(page=1)}">First</a>
+                    <span class="page-link off disabled" tabindex="-1" th:unless="${currentPage > 1} ? 'disabled'">First</span>
+                </li>
+                <li class="page-item" th:each="i : ${#numbers.sequence(1, totalPages)}" >
+                    <a class="page-link  on active" tabindex="-1" th:if="${i != currentPage}" th:href="@{/admin/dashboard/user-management/approved/(page=${i})}">[[${i}]]</a>
+                    <span class="page-link off disabled" tabindex="-1" th:unless="${i != currentPage}">[[${i}]]</span>
+                </li>
+                <li class="page-item">
+                    <a class="page-link  on active" tabindex="-1" th:if="${currentPage > 1}" th:href="@{/admin/dashboard/user-management/approved/(page=${currentPage - 1})}">Previous</a>
+                    <span class="page-link off disabled" tabindex="-1" th:unless="${currentPage > 1} ? 'disabled'" >Previous</span>
+                </li>
+                <li class="page-item">
+                    <a class="page-link  on active" tabindex="-1" th:if="${currentPage < totalPages}" th:href="@{/admin/dashboard/user-management/approved/(page=${currentPage + 1})}">Next</a>
+                    <span class="page-link off  disabled" th:unless="${currentPage < totalPages}">Next</span>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+</body>
+<style>
+    hr {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+        border: 0;
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+    }
+    .box_shadow{
+        width: auto;
+        height: auto;
+        background: white;
+        box-shadow: 0 4px 2px rgba(0,0,0,0.02), 0 8px 6px rgba(0,0,0,0.03), 0 16px 10px rgba(0,0,0,0.04), 0 26px 18px rgba(0,0,0,0.05);
+    }
+    .off{
+        font-style: italic;
+        font-weight: lighter;
+        font-family: "Baskerville Old Face","Times New Roman", Times, serif;
+        color: black;
+    }
+    .on{
+        font-family: "Baskerville Old Face","Times New Roman", Times, serif;
+        font-weight: bolder;
+        color: darkblue;
+    }
+</style></html>

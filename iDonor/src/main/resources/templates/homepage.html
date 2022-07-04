@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en"
+xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>iDONOR HOMEPAGE</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+    <div>
+            <nav class="navbar navbar-dark bg-dark me-3 ms-3 mt-2 navbar-expand-lg fixed-top" style="color: red">
+                <div class="container">
+                    <a class="navbar-brand mt-2 mt-lg-0" style="color: blue" href="#" th:href="@{/admin/dashboard}">
+                        <span class="fas fa-font-awesome-logo-full fst-italic me-2" style="color: blue">iDONOR</span>
+                    </a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent" style="justify-content: flex-end">
+
+                        <ul class="navbar-nav ms-auto">
+                            <li class="nav-item ps-1">
+                                <a class="nav-link"  href="#" th:href="@{/homepage}">
+                                    <span style="color: blue"><i class="fas fa-home fa-fw"></i></span>
+                                    <span style="color: indianred">Home</span></a>
+                            </li>
+                            <li class="nav-item ps-1">
+                                <a class="nav-link fst-italic" data-toggle="modal" data-target="#modalRegisterForm">
+                                    <span style="color: blue"><i class="fas fa-hands-helping fa-fw"></i></span>
+                                    <span style="color:  indianred">Make Appeal</span>
+                                </a>
+                            </li>
+                            <li class="nav-item ps-1">
+                                <a class="nav-link fst-italic"   href="#" data-th-value="blog">
+                                    <span style="color: blue"><i class="fas fa-th-list fa-fw"></i></span>
+                                    <span style="color: indianred">Blog</span></a>
+                            </li>
+                            <li class="nav-item ps-1">
+                                <a class="nav-link fst-italic"  href="#" data-value="about-us">
+                                    <span style="color: blue"><i class="fas fa-info-circle fa-fw"></i></span>
+                                    <span style="color: indianred">About Us</span></a>
+                            </li>
+                            <li class="nav-item ps-1">
+                                <a class="nav-link fst-italic"  href="#" data-value="contact">
+                                    <span style="color: blue"><i class="fas fa-headphones-alt fa-fw"></i></span>
+                                    <span style="color: indianred">Contact Us</span></a>
+                            </li>
+                            <li class="nav-item ps-1">
+                                <a class="nav-link fst-italic"  href="#" th:href="@{/donor/dashboard}">
+                                    <span style="color: blue"><i class="fas fa-sign-in-alt fa-fw"></i></span>
+                                    <span style="color: indianred">Sign In</span></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+    </div>
+<div>
+    <header class="header img-fluid" th:style="'background-image: url(/images/bg.jpg);background-attachment: fixed; background-size: cover; background-position: center'">
+        <div class="">
+            <div class="overlay"></div>
+            <div class="container">
+                <div class="description" style="white-space: normal">
+                    <h1 style="color: indianred"> Hey, There..!</h1>
+                        <p class="fst-italic" style=" color:#666;font-size: 20px;width: 50%; line-height: 1.5;">
+                            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non<span id="dots">...</span>
+                            <span id="more">
+                                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                                            ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+            proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+                            </span>
+                        </p>
+                        <button id="myBtn" class="btn btn-outline-secondary bg-info btn-lg" onclick="aFunction()">See more</button>
+                    </h1>
+                </div>
+            </div>
+        </div>
+    </header>
+</div>
+<div class="row" id="about-us">
+    <div class="col-lg-4 col-md-4 col-sm-12">
+        <img th:src="@{/images/hand.jpg}" class="img-fluid" alt="yo">
+        <span class="text-justify">S.Web Developer</span>
+    </div>
+    <div class="col-lg-8 col-md-8 col-sm-12 desc">
+
+        <h3>D.John</h3>
+        <p>
+            ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+            proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+    </div>
+</div>
+    <div class="contact-form" id="contact">
+        <div class="container">
+            <form>
+                <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <h1>Get in Touch</h1>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-12 right">
+                        <div class="form-group">
+                            <input type="text" class="form-control form-control-lg" placeholder="Your Name" name="">
+                        </div>
+                        <div class="form-group">
+                            <input type="email" class="form-control form-control-lg" placeholder="YourEmail@email.com" name="email">
+                        </div>
+                        <div class="form-group">
+         <textarea class="form-control form-control-lg">
+
+         </textarea>
+                        </div>
+                        <input type="submit" class="btn btn-secondary btn-block" value="Send" name="">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+<div>
+    <footer>
+        <div class="jumbotron jumbotron-fluid bg-secondary p-4 mt-5 mb-0">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4 cizgi">
+                        <div class="card bg-secondary border-0">
+                            <div class="card-body text-light text-center">
+                                <h5 class="card-title text-white display-4" style="font-size:30px">Telif Hakkı</h5>
+                                <p class="d-inline lead">Tüm Hakları Saklıdır © 2018<br>
+                                    <a href="#" class="text-light d-block lead">Blog</a>
+                                </p>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 cizgi">
+                        <div class="card bg-secondary border-0">
+                            <div class="card-body text-center">
+                                <h5 class="card-title text-white display-4" style="font-size:30px">İletişim</h5>
+                                <a class="text-light d-block lead" style="margin-left: -20px" href="#"><i class="fa fa-phone mr-2"></i>+90 (000) 000 0 000</a>
+                                <a class="text-light d-block lead" href="#"><i class="fa fa-envelope mr-2"></i>admin@localhost.com</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
+                        <div class="card bg-secondary border-0">
+                            <div class="card-body text-center">
+                                <h5 class="card-title text-white display-4" style="font-size:30px">Sosyal Medya</h5>
+
+                                <a class="text-light" href="#"><i class="fa fa-facebook-square fa-fw fa-2x"></i></a>
+
+                                <a class="text-light" href="#"><i class="fa fa-twitter-square fa-fw fa-2x"></i></a>
+
+                                <a class="text-light" href="#"><i class="fa fa-instagram fa-fw fa-2x"></i></a>
+
+                                <a class="text-light" href="#"><i class="fa fa-linkedin fa-fw fa-2x"></i></a>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!--# Footer #-->
+</div>
+
+<div>
+    <div class="modal fade" id="modalRegisterForm" tabindex="-1" data-keyboard="false" data-backdrop="static" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" style="width: inherit">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Default Modal</h5>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body container-fluid">
+                    <hr/>
+                    <hr/>
+                    <form method="post" th:action="@{/appeal/save}">
+                        <div class="container-fluid">
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    <label for="name">Name: </label>
+                                    <input id="name" class="form-control" th:value="${newAppeal.recipientName}" name="recipientName" required/>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="tel">PhoneNumber </label>
+                                    <input id="tel" class="form-control" th:value="${newAppeal.phoneNumber}" name="phoneNumber" required/>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="age">Age:</label>
+                                    <input id="age"  class="form-control input-sm" style="flex: 0 1 100px;" th:value="${newAppeal.recipientAge}" name="recipientAge" required/>
+                                </div>
+                            </div>
+                            <div class="form-row" style="display: flex; align-items: center">
+                                <div class="form-group col-md-6">
+                                    <label for="pint">Amount of Pints</label>
+                                    <input id="pint" size="5" type="text" th:value="${newAppeal.numberOfPints}" name="numberOfPints" required/>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="blood type" style="margin-right: 10px;">BloodType:</label>
+                                    <select id="blood type" class="dropdown fas fa-dropbox" th:field="*{newAppeal.bloodType}" required>
+                                        <th:block th:each="bloodtypes : ${listBloodTypes}">
+                                            <option th:text="${bloodtypes.name}" th:value="${bloodtypes.id}"></option>
+                                        </th:block>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <i class="fas fa-pencil-alt prefix"></i>
+                                <label for="desc">Description</label>
+                                <textarea class="form-control md-textarea" rows="3" id="desc" th:value="${newAppeal.description}" name="description" required></textarea>
+                            </div>
+                            <div class="form-row">
+                                <div class="col">
+                                    <label for="county">County: </label>
+                                    <input id="county" type="text" class="form-control" th:value="${address.county}" name="county" required/>
+                                </div>
+                                <div class="col">
+                                    <label for="subCounty">Sub-County: </label>
+                                    <input id="subCounty" type="text" class="form-control" th:value="${address.subCounty}" name="subCounty"/>
+                                </div>
+                                <div class="col">
+                                    <label for="ward">Ward: </label>
+                                    <input id="ward" type="text" class="form-control" th:value="${address.ward}" name="ward" required/>
+                                </div>
+                            </div>
+                            <div class="text-center mt-3">
+                                <button type="submit" onclick="return confirm('are you sure about this')" class="btn btn-primary">submit</button>
+                            </div>
+                        </div>
+                    </form>
+                    <hr/>
+                    <hr/>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+<style>
+    .description{
+        position: absolute;
+        top: 30%;
+        margin: auto;
+        padding: 2em;
+
+    }
+    .overlay{
+        position: absolute;
+        min-height: 100%;
+        min-width: 100%;
+        left: 0;
+        top: 0;
+        background: rgba(244, 244, 244, 0.35);
+    }
+    .contact-form{
+        margin: 6em 0;
+        position: relative;
+    }
+
+    .contact-form h1{
+        padding:2em 1px;
+        color: #F97300;
+    }
+    .contact-form .right{
+        max-width: 600px;
+    }
+    .contact-form .right .btn-secondary{
+        background:  #F97300;
+        color: #fff;
+        border:0;
+    }
+    .contact-form .right .form-control::placeholder{
+        color: #888;
+        font-size: 16px;
+    }
+    #more {display: none;}
+</style>
+<script>
+    $(document).ready(function(){
+        $('.header').height($(window).height());
+
+    })
+    $(".navbar a").click(function(){
+        $("body,html").animate({
+            scrollTop:$("#" + $(this).data('value')).offset().top
+        },1000)
+    })
+    function aFunction() {
+        const dots = document.getElementById("dots");
+        const moreText = document.getElementById("more");
+        const btnText = document.getElementById("myBtn");
+
+        if (dots.style.display === "none") {
+            dots.style.display = "inline";
+            btnText.innerHTML = "Read more";
+            moreText.style.display = "none";
+        } else {
+            dots.style.display = "none";
+            btnText.innerHTML = "Read less";
+            moreText.style.display = "inline";
+        }
+    }
+</script>
+</html>

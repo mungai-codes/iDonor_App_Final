@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org"
+>
+<head>
+    <meta charset="UTF-8" http-equiv="Content-Type" content="text/html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <title>registration</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+</head>
+<body>
+<div class="container-fluid text-center fst-italic mt-3">
+    <div>
+        <form oninput='pass2.setCustomValidity(pass2.value !== pass1.value ? "Passwords do not match." : "")' method="post" action="#" th:action="@{/save}" style="max-width: 1200px; margin: 0 auto" enctype="multipart/form-data" id="registration_form">
+            <div class="border border-secondary p-3 rounded">
+                    <i class="fas fa-user-plus">
+                        <span style="color: #7386D5; font-family: Courier,Times,'Baskerville Old Face'">Donor Registration</span>
+                    </i>
+                <br/>
+                <hr>
+                <div>
+                    <div class="row mb-4 pb-2 pb-md-0 mb-md-5">
+                        <div class="col-md-3">
+                            <div class="form-outline">
+                                <label class="form-label" for="phoneNumber">PhoneNumber:</label>
+                                <input th:field="*{donor.phoneNumber}" type="tel" id="phoneNumber" class="form-control" required />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-outline">
+                                <label class="form-label" for="Email">Email: </label>
+                                <input id="Email" type="email" class="form-control" th:field="*{donor.email}" required/>
+                            </div>
+                        </div>
+                    </div>
+                    <hr/>
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <label for="first_name">Firstname: </label>
+                            <input id="first_name" type="text" class="form-control" th:field="*{donor.firstName}" required/>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="sur_name">Surname: </label>
+                            <input id="sur_name" type="text" class="form-control" th:field="*{donor.surname}" required/>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="dob">Date-of-Birth: </label>
+                            <input id="dob" type="date" class="form-control" th:field="*{donor.dateOfBirth}" required/>
+                        </div>
+                    </div>
+                    <hr/>
+                    <div class="row">
+                            <div class="form-group col-md-4">
+                                <label for="county">County: </label>
+                                <input id="county" type="text" class="form-control" th:value="${address.county}" name="county" required/>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="Sub_County">SubCounty: </label>
+                                <input id="Sub_County" type="text" class="form-control" th:value="${address.subCounty}" name="subCounty" required/>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="ward">Ward: </label>
+                                <input id="ward" type="text" class="form-control" th:value="${address.ward}" name="ward" required/>
+                            </div>
+                    </div>
+                    <hr/>
+                    <div class="row mb-4 pb-2 pb-md-0 mb-md-5">
+                        <div class="col-md-8">
+                            <div class="form-outline">
+                                <label for="blood">BloodType:</label>
+                                <select id="blood" class="select" th:field="*{donor.bloodType}" required>
+                                    <th:block th:each="bloodtypes : ${listBloodTypes}">
+                                        <option th:text="${bloodtypes.name}" th:value="${bloodtypes.id}"></option>
+                                    </th:block>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <hr/>
+                    <div class="row mb-4 pb-2 pb-md-0 mb-md-5">
+                        <div class="col-md-8">
+                            <div class="form-outline">
+                                <label for="gender">Gender:</label>
+                                <select class="select" th:field="*{donor.gender}" id="gender" required>
+                                    <option value="nothing selected"></option>
+                                    <option th:each="value : ${T(net.mungai.idonor.donor.models.Gender).values()}"
+                                            th:value="${value}" th:text="${value.displayValue}">
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <hr/>
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
+                            <label class="form-label" for="password">Password</label>
+                            <input th:value="${donor.password}"  type="password" id="password" name="password" class="form-control" required/>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <button type="submit" class="btn btn-success btn-lg mb-1">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+<style>
+    hr {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+        border: 0;
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+    }
+</style>
+<script type="text/javascript">
+    const phoneInputField = document.querySelector("#phoneNumber");
+    const phoneInput = window.intlTelInput(phoneInputField, {
+        utilsScript:
+            "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+    });
+
+</script>
+</html>

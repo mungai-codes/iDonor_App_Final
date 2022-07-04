@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>View Appeals</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</head>
+<body>
+<div class="container text-center container-fluid mt-5">
+<div>
+   <table class="table table-bordered">
+       <thead class="table-dark">
+       <tr>
+       <th>
+           ID
+           <i class="fas fa-id-card"></i>
+       </th>
+       <th>Recipient Name</th>
+       <th>Age</th>
+       <th>Blood Type</th>
+       <th>Address</th>
+       </tr>
+       </thead>
+       <tbody>
+       <tr th:each="appeal : ${appealList}">
+           <td th:text="${appeal.id}">ID</td>
+           <td th:text="${appeal.recipientName}">RECIPIENT NAME</td>
+           <td th:text="${appeal.recipientAge}">AGE</td>
+           <td th:text="${appeal.bloodType.name}">BLOOD TYPE</td>
+           <td>
+               <span th:text="${appeal.recipientAddress.county}">COUNTY</span>
+               <span th:text="${appeal.recipientAddress.subCounty}">SUB COUNTY</span>
+               <span th:text="${appeal.recipientAddress.ward}">WARD</span>
+           </td>
+       </tr>
+       </tbody>
+   </table>
+</div>
+</div>
+</body>
+</html>

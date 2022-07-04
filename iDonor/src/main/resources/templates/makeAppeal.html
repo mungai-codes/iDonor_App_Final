@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Make An Appeal</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/font-awesome/5.15.4/css/font-awesome.min.css}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</head>
+<body>
+<div class="container container-fluid text-center mt-5">
+<div>
+    <form method="post" th:action="@{/appeal/save}">
+        <table class="table table-bordered table-striped">
+            <tr>
+                <td><label for="name">Recipients Name: </label></td>
+                <td><input id="name" type="text" th:value="${newAppeal.recipientName}" name="recipientName" required/></td>
+            </tr>
+            <tr>
+                <div class="col-auto">
+                    <label class="col-form-label">BloodType:
+                        <select class="dropdown fas fa-dropbox" th:field="*{newAppeal.bloodType}" required>
+                            <th:block th:each="bloodtypes : ${listBloodTypes}">
+                                <option th:text="${bloodtypes.name}" th:value="${bloodtypes.id}"></option>
+                            </th:block>
+                        </select>
+                    </label>
+                </div>
+            </tr>
+            <tr>
+                <td><label for="age">Recipients Age</label></td>
+                <td><input id="age" type="text" th:value="${newAppeal.recipientAge}" name="recipientAge" required/></td>
+            </tr>
+            <tr>
+                <td>Address</td>
+                <td>
+                    <span><label for="subCounty">County </label><input id="county" type="text" th:value="${address.county}" name="county" required/></span>
+                    <span><label for="subCounty">Sub County </label><input id="subCounty" type="text" th:value="${address.subCounty}" name="subCounty" required/></span>
+                    <span><label for="ward">Ward </label><input id="ward" type="text" th:value="${address.ward}" name="ward" required/></span>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="pint">Amount of Pints</label></td>
+                <td><input id="pint" type="number" th:value="${newAppeal.numberOfPints}" name="numberOfPints"/></td>
+            </tr>
+            <tr>
+                <td colspan="2"><button class="btn-primary" type="submit">save</button></td>
+            </tr>
+        </table>
+    </form>
+</div>
+</div>
+</body>
+</html>

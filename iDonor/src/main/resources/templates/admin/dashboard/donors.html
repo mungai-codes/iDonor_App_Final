@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>iDonor Admin Dashboard</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</head>
+<body class="body">
+<header>
+    <!-- Sidebar -->
+    <nav  id="sidebarMenu" class="collapse d-lg-block sidebar collapse bg-white">
+        <div class="position-sticky">
+            <div class="list-group list-group-flush mx-3 mt-4">
+                <a href="#" class="list-group-item list-group-item-action py-2 ripple" aria-current="true">
+                    <i class="fas fa-tachometer-alt fa-fw me-3"></i
+                    ><span style="color: dodgerblue">Dashboard</span>
+                </a>
+                <a href="#" th:href="@{/admin/dashboard/donors}" class="list-group-item list-group-item-action py-2 ripple" aria-current="true">
+                    <i class="fas fa-th-list fa-fw me-3"></i
+                    ><span style="color: dodgerblue">Donors</span>
+                </a>
+                <a href="#" class="list-group-item list-group-item-action py-2 ripple active">
+                    <i class="fas fa-chart-area fa-fw me-3"></i
+                    ><span style="color: dodgerblue">Website traffic</span>
+                </a>
+                <a href="#" class="list-group-item list-group-item-action py-2 ripple">
+                    <i class="fas fa-lock fa-fw me-3"></i>
+                    <span style="color: dodgerblue">Password</span>
+                </a>
+                <a href="#" class="list-group-item list-group-item-action py-2 ripple">
+                    <i class="fas fa-chart-line fa-fw me-3"></i>
+                    <span style="color: dodgerblue">Analytics</span>
+                </a>
+                <a href="#" class="list-group-item list-group-item-action py-2 ripple">
+                    <i class="fas fa-chart-pie fa-fw me-3"></i>
+                    <span style="color: dodgerblue">SEO</span>
+                </a>
+            </div>
+        </div>
+</nav>
+
+ <nav id="main-navbar" class="navbar navbar-expand-lg navbar-light bg-dark fixed top">
+     <div class="container-fluid">
+         <a class="navbar-brand mt-2 mt-lg-0" style="color: blue" href="#">
+             <span class="fas fa-font-awesome-logo-full fst-italic me-2" style="color: blue">Admin Dashboard</span>
+         </a>
+         <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+             <i class="fas fa-bars"></i>
+         </button>
+
+         <div class="collapse navbar-collapse" style="justify-content: flex-end">
+             <ul class="navbar-nav ms-auto">
+                 <li class="nav-item ps-3">
+                     <a class="nav-link" style="color: red" href="#" th:href="@{/admin/dashboard}"><i class="fas fa-home fa-fw mr-1"></i>Home</a>
+                 </li>
+                 <li class="nav-item active ps-3">
+                     <a class="nav-link" style="color: red" href="#"><i class="fas fa-th-list fa-fw mr-1"></i>Blog</a>
+                 </li>
+                 <li class="nav-item active ps-3 pe-5 me-5">
+                     <a class="nav-link" style="color: red" href="#"><i class="fas fa-user fa-fw mr-1"></i>User</a>
+                 </li>
+             </ul>
+         </div>
+     </div>
+ </nav>
+</header>
+<main style="margin-top: 5px" >
+    <div class="container pt-4 text-center">
+        <div>
+            <table class="table table-bordered">
+                <thead class="bg-dark">
+                <tr class="text-white">
+                    <td>EMAIL</td>
+                    <td>FIRST-NAME</td>
+                    <td>SURNAME</td>
+                    <td>GENDER</td>
+                    <td>BLOOD-TYPE</td>
+                    <td>Address</td>
+                    <td>Enable</td>
+                    <td>Disable</td>
+                    <td>Send Message</td>
+                </tr>
+                </thead>
+                <tbody class="bg-light">
+                <tr th:each="donor : ${listOfDonors}">
+                    <td th:text="${donor.email}">EMAIL</td>
+                    <td th:text="${donor.firstName}">FIRST-NAME</td>
+                    <td th:text="${donor.surname}">SURNAME</td>
+                    <td th:text="${donor.gender}">GENDER</td>
+                    <td th:text="${donor.bloodType.name}">BLOOD-TYPE</td>
+                    <td>
+                        <span th:text="${donor.address.county}"></span>
+                        &nbsp;
+                        <span th:text="${donor.address.subCounty}"></span>
+                        &nbsp;
+                        <span th:text="${donor.address.ward}"></span>
+                    </td>
+                    <td>
+                        <form action="#" th:action="@{/enableDonor/{id}(id=${donor.id})}"  method="post">
+                            <button type="submit" class="bg-success btn-sm">
+                                <i class="fas fa-check-square"></i>
+                            </button>
+                        </form>
+                    </td>
+                    <td>
+                        <form action="#" th:action="@{/disableDonor/{id}(id=${donor.id})}"  method="post">
+                            <button type="submit" class="bg-danger btn-sm">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </form>
+                    </td>
+                    <td>
+                        <form action="#" th:action="@{/miracle/{id}(id=${donor.id})}"  method="post">
+                            <button type="submit" class="bg-info btn-sm">
+                                <i class="fas fa-sms"></i>
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="mb-2">
+            <div>
+                Authenticated as: <span th:text="${#authentication.name}"></span>
+            </div>
+            <div>
+                Roles: <span th:text="${#authentication.authorities}"></span>
+            </div>
+            <form th:action="@{/admin/logout}" method="post">
+                <input type="submit" value="Sign Out"/>
+            </form>
+        </div>
+    </div>
+</main>
+<script type="text/javascript" th:src="@{../static/javascript/myjs.js}" ></script>
+</body>
+<style>
+    .body{
+        background-color: lightskyblue;
+    }
+    @media (min-width: 1000px) {
+        main {
+            padding-left: 220px;
+        }
+    }
+    .sidebar {
+        position: fixed;
+        top: 57px;
+        bottom: 0;
+        left: 0;
+        padding: 20px 0 0; /* Height of navbar */
+        box-shadow: 0 2px 5px 0 rgb(0 0 0 / 5%), 0 2px 10px 0 rgb(0 0 0 / 5%);
+        width: 220px;
+        border-right: 5px solid #343a40;
+        border-bottom: 5px solid #343a40;
+        z-index: 600;
+    }
+
+    @media (max-width: 991.98px) {
+        .sidebar {
+            width: 100%;
+        }
+    }
+    .sidebar .active {
+        border-radius: 5px;
+        box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+    }
+
+    .sidebar-sticky {
+        position: relative;
+        top: 0;
+        height: calc(100vh - 48px);
+        padding-top: 0.5rem;
+        overflow-x: hidden;
+        overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+    }
+</style>
+</html>

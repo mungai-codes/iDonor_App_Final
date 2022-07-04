@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>IDonor Admin Dashboard</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.js"></script>
+    <script src="https://unpkg.com/jquery-tabledit@1.0.0/jquery.tabledit.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css">
+    <link rel="stylesheet" type="text/css" href="https://datatables.net/media/css/site-examples.css">
+
+    <style>
+        @media screen and (min-width: 400px) {
+            .modal-dialog {
+                max-width: 1000px; /* New width for default modal */
+            }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar mt-2 mx-5 navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand pe-5" href="#" style="font-family: 'Baskerville Old Face',sans-serif; color: dodgerblue">iDONOR..admin-dashboard</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <form th:action="@{/action}" class="d-flex pe-3" autocomplete="off" autofocus>
+                        <div class="input-group">
+                            <label for="bloodType-search"></label><input  id="bloodType-search" name="bloodType" type="text" class="form-control" placeholder="Search..bloodtype" required>
+                            <label for="address-search"></label><input  id="address-search" name="address" type="text" class="form-control" placeholder="Search..address" required>
+                            <input type="submit" class="btn fas fa-search btn-secondary"/>
+                            <input type="button" class="btn btn-danger" value="clear"/>
+                        </div>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-12">
+            <div style="margin: 40px; width: 1200px">
+                <table class="table table-striped" id="table_id" style="font-family: 'Baskerville Old Face',Serif,Times; color: green">
+                    <thead class="thead-dark">
+                    <tr style="font-family: 'Baskerville Old Face',Serif,Times; color: dodgerblue">
+                        <td class="fas fa-fingerprint"> id</td>
+                        <td><i class="fas fa-envelope-open"> email</i></td>
+                        <td><i class="fas fa-info"> first-name</i></td>
+                        <td><i class="fas fa-info"> surname</i></td>
+                        <td class="fas fa-person-booth"> gender</td>
+                        <td><i class="fas fa-calendar"> date-of-birth</i></td>
+                        <td class="fas fa-info-circle"> blood-type</td>
+                        <td><i class="fas fa-phone-square-alt"> phone-number</i></td>
+                        <td class="fas fa-address-book"> address</td>
+                        <td><i class="fas fa-paper-plane"> contact</i></td>
+                    </tr>
+                    </thead>
+                    <tbody >
+                    <tr th:each="info : ${search}">
+                        <td>
+                            <p th:text="${info.id}"></p>
+                        </td>
+                        <td>
+                            <p th:text=${info.email}></p>
+                        </td>
+                        <td>
+                            <p th:text=${info.firstName}></p>
+                        </td>
+                        <td>
+                            <p th:text="${info.surname}"></p>
+                        </td>
+                        <td>
+                            <p th:text="${info.gender}"></p>
+                        </td>
+                        <td>
+                            <p th:text="${info.dateOfBirth}"></p>
+                        </td>
+                        <td>
+                            <p th:text="${info.bloodType.name}"></p>
+                        </td>
+                        <td>
+                            <p th:text="${info.phoneNumber}"></p>
+                        </td>
+                        <td>
+                            <p th:text="${info.address.county}"></p>
+                            <p th:text="${info.address.subCounty}"></p>
+                            <p th:text="${info.address.ward}"></p>
+                        </td>
+                        <td>
+                                                        <form action="#" th:action="@{/admin/messaging/{id}(id=${info.id})}"  method="post">
+                                                            <p>[[${hospital}]]</p>
+                                                            <button type="submit" class="bg-info btn-sm">
+                                                                <i class="fas fa-sms"></i>
+                                                            </button>
+                                                        </form>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="mt-5">
+    <input type="text" th:value="${bloode}">
+</div>
+</body>
+<style>
+    hr {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+        border: 0;
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+    }
+    .box_shadow{
+        width: auto;
+        height: auto;
+        background: white;
+        box-shadow: 0 4px 2px rgba(0,0,0,0.02), 0 8px 6px rgba(0,0,0,0.03), 0 16px 10px rgba(0,0,0,0.04), 0 26px 18px rgba(0,0,0,0.05);
+    }
+
+</style>
+<script>
+    function clearSearch(){
+        window.location = "[[@{/admin/dashboard}]]";
+    }
+    const searchFocus = document.getElementById('search-bar');
+    const keys = [
+        { keyCode: 'AltLeft', isTriggered: false },
+        { keyCode: 'ControlLeft', isTriggered: false },
+    ];
+
+    window.addEventListener('keydown', (e) => {
+        keys.forEach((obj) => {
+            if (obj.keyCode === e.code) {
+                obj.isTriggered = true;
+            }
+        });
+
+        const shortcutTriggered = keys.filter((obj) => obj.isTriggered).length === keys.length;
+
+        if (shortcutTriggered) {
+            searchFocus.focus();
+        }
+    });
+
+    window.addEventListener('keyup', (e) => {
+        keys.forEach((obj) => {
+            if (obj.keyCode === e.code) {
+                obj.isTriggered = false;
+            }
+        });
+    });
+
+    $(document).ready(function () {
+        $('#table_id').DataTable({
+            "dom": "tp",
+            "ordering": true,
+            "pagingType": "simple",
+            "lengthMenu": [ 5 ],
+            "className": "text-center"
+        });
+    });
+    $('table > tbody > tr').each(function (index, tr){
+        console.log(index);
+        console.log(tr)
+    });
+    document.getElementById("submit").onclick = function (){
+        document.getElementById("").submit();
+    }
+</script>
+<style>
+    .dataTables_paginate {
+        float: left !important;
+    }
+</style>
+</html>

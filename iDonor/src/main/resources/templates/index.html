@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>iDonor Homepage</title>
+</head>
+<link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+<link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap-theme.min.css}"/>
+<link rel="stylesheet" type="text/css" th:href="@{/webjars/font-awesome/css/font-awesome.min.css}"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<body>
+<div sec:authorize="isAuthenticated()">
+<!-- Welcome <span sec:authentication="email">Username</span>-->
+
+    <form th:action="@{/logout}" method="post">
+        <input type="submit" value="LOGOUT"/>
+    </form>
+</div>
+<div>
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark ms-5 me-5 mt-5 mb-5">
+        <div class="navbar-collapse collapse w-100">
+            <ul class="navbar-nav nav-tabs me-auto">
+                <li class="nav-item active">
+                    <a class="nav-link ui-icon-home" th:href="@{/home}"><span><i  class="fa fa-home"></i></span>HOME</a>
+                </li>
+                <li class="nav-item active">
+                    <form th:action="@{/search}">
+                        Filter: <input type="text" name="keyword" id="keyword" size="50" th:value="${bloodHell}" />
+<!--                        &nbsp;<input type="text" size="50" th:value="${add}"  />-->
+                        <input type="submit" value="Search" />
+                        &nbsp;
+                        <input type="button" value="Clear" id="btnClear" onclick="clearSearch()" />
+                    </form>
+                </li>
+<!--                <li class="nav-item active">-->
+<!--                    <form th:action="@{/search}" class="d-flex pe-3">-->
+<!--                        <div class="input-group">-->
+<!--                            <input th:value="${keyword}" id="bloodType-search" required type="text" class="form-control" placeholder="Search..bloodtype">-->
+<!--                            <input th:value="${add}" id="address-search" required type="text" class="form-control" placeholder="Search..address">-->
+<!--                            <input type="submit" class="btn fas fa-search btn-secondary"/>-->
+<!--                            <input type="button"/>-->
+<!--                        </div>-->
+<!--                    </form>-->
+<!--                </li>-->
+            </ul>
+        </div>
+    </nav>
+</div>
+<div class="container-fluid container text-center">
+<div>
+    <table class="table table-bordered">
+        <thead class="bg-dark">
+        <tr class="text-white">
+            <td>EMAIL</td>
+            <td>FIRST-NAME</td>
+            <td>SURNAME</td>
+            <td>GENDER</td>
+            <td>BLOOD-TYPE</td>
+            <td>Status</td>
+        </tr>
+        </thead>
+        <tbody class="bg-light">
+        <tr th:each="donors : ${search}">
+            <td th:text="${donors.email}">EMAIL</td>
+            <td th:text="${donors.firstName}">FIRST-NAME</td>
+            <td th:text="${donors.surname}">SURNAME</td>
+            <td th:text="${donors.gender}">GENDER</td>
+            <td th:text="${donors.bloodType.name}">BLOOD-TYPE</td>
+            <td th:text="${donors.enabled}">Status</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+    &nbsp;
+<div>
+        <table class="table table-bordered">
+            <thead class="bg-dark">
+            <tr class="text-white">
+                <td>EMAIL</td>
+                <td>FIRST-NAME</td>
+                <td>SURNAME</td>
+                <td>GENDER</td>
+                <td>BLOOD-TYPE</td>
+                <td>Address</td>
+                <td>Enable</td>
+                <td>Disable</td>
+            </tr>
+            </thead>
+            <tbody class="bg-light">
+            <tr th:each="donor : ${think}">
+                <td th:text="${donor.email}">EMAIL</td>
+                <td th:text="${donor.firstName}">FIRST-NAME</td>
+                <td th:text="${donor.surname}">SURNAME</td>
+                <td th:text="${donor.gender}">GENDER</td>
+                <td th:text="${donor.bloodType.name}">BLOOD-TYPE</td>
+                <td>
+                    <span th:text="${donor.address.county}"></span>
+                    &nbsp;
+                    <span th:text="${donor.address.subCounty}"></span>
+                    &nbsp;
+                    <span th:text="${donor.address.ward}"></span>
+                </td>
+                <td>
+                    <form action="#" th:action="@{/enableDonor/{id}(id=${donor.id})}"  method="post">
+                        <button type="submit" class="bg-success btn-sm">
+                            <i class="fas fa-check-square"></i>
+                        </button>
+                    </form>
+                </td>
+                <td>
+                    <form action="#" th:action="@{/disableDonor/{id}(id=${donor.id})}"  method="post">
+                        <button type="submit" class="bg-danger btn-sm">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+    function clearSearch() {
+        window.location = "[[@{/}]]";
+    }
+</script>
+</html>

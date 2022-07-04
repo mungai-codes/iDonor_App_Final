@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en"
+xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Donor Registration</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/font-awesome/5.15.4/css/font-awesome.min.css}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</head>
+<body>
+<div>
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark ms-5 me-5 mt-5 mb-5">
+        <div class="navbar-collapse collapse w-100">
+            <ul class="navbar-nav nav-tabs me-auto">
+                <li class="nav-item active">
+                    <a class="nav-link ui-icon-home me-3" href="#" th:href="@{/}">
+                        <i class="fas fa-home"></i>
+                        HOME
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="mx-auto order-0">
+            <a class="navbar-brand mx-auto" th:href="@{/}">DONOR REGISTRATION</a>
+            <button class="navbar-toggler" type="button"
+                    data-toggle="collapse"
+                    data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse w-100">
+            <ul class="navbar-nav nav-tabs ms-auto">
+                <li class="nav-item active">
+                    <a class="nav-link link-info ms-3" th:href="@{/administrator}" >
+                        <i class="fas fa-user"></i>
+                        Profile
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
+<div class="text-center">
+    <form method="post" action="#" th:action="@{/save}" enctype="multipart/form-data">
+        <table class="table table-striped">
+            <tr>
+                <td><label class="col-form-label col-sm-4">Email:</label></td>
+                <td class="col-sm-8"><input type="email" th:value="${donor.email}" name="email" required/></td>
+            </tr>
+            <tr>
+                <td><label  class="col-form-label col-sm-4">First Name:</label></td>
+                <td><label class="col-sm-8">
+                    <input type="text" th:value="${donor.firstName}" name="firstName" required/>
+                </label></td>
+            </tr>
+            <tr>
+                <td><label class="col-form-label col-sm-4">Surname:</label></td>
+                <td><label class="col-sm-8">
+                    <input type="text" th:value="${donor.surname}" name="surname" required/>
+                </label></td>
+            </tr>
+            <tr>
+                <td class="col-form-label col-sm-4">date Of Birth</td>
+                <td class="col-sm-8"><input type="date" th:value="${donor.dateOfBirth}" name="dateOfBirth" required/></td>
+            </tr>
+            <tr>
+                <td>
+                    <label class="col-form-label col-sm-4" th:for="gender">Gender:</label>
+                </td>
+                <td class="col-sm-8">
+                    <select class="dropdown" th:field="*{donor.gender}" id="gender" required>
+                        <option value="nothing selected"></option>
+                        <option th:each="value : ${T(net.mungai.idonor.donor.models.Gender).values()}"
+                                th:value="${value}" th:text="${value.displayValue}">
+                        </option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><label class="col-form-label col-sm-4">Blood Types: </label></td>
+                <td class="dropdown">
+                    <select th:field="*{donor.bloodType}" required>
+                        <th:block th:each="bloodtypes : ${listBloodTypes}">
+                            <option th:text="${bloodtypes.name}" th:value="${bloodtypes.id}"></option>
+                        </th:block>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-form-label col-sm-4">phone number</td>
+                <td class="col-sm-8"><input type="text" th:value="${donor.phoneNumber}" name="phoneNumber" required/></td>
+            </tr>
+            <tr>
+                <td class="col-form-label col-sm-4">Password</td>
+                <td class="col-sm-8"><input type="password" th:value="${donor.password}" name="password" required/></td>
+            </tr>
+            <tr>
+                <td class="col-form-label col-sm-4">County</td>
+                <td class="col-sm-8"><input type="text" th:value="${address.county}" name="county" required/></td>
+            </tr>
+            <tr>
+                <td class="col-form-label col-sm-4">Sub County</td>
+                <td class="col-sm-8"><input type="text" th:value="${address.subCounty}" name="subCounty" required/></td>
+            </tr>
+            <tr>
+                <td class="col-form-label col-sm-4">Ward</td>
+                <td class="col-sm-8"><input type="text" th:value="${address.ward}" name="ward" required/></td>
+            </tr>
+            <tr>
+                <td><label>Profile Picture:</label></td>
+                <td><input type="file" name="image" accept="image/png, image/jpg"/></td>
+            </tr>
+            <tr>
+                <td colspan="2"><button class="btn-primary" type="submit">save</button></td>
+            </tr>
+        </table>
+    </form>
+</div>
+</body>
+</html>

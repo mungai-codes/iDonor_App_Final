@@ -1,0 +1,4 @@
+twilio:
+  account_sid: AC53bee3f63afaa26121850f046b343096
+  auth_token: cebea16e068ac210701995a2fc5ed61f
+  from_number: "+18596360661"

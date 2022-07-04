@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8" http-equiv="Content-Type" content="text/html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <title>iDONOR login</title>\
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div class="container-fluid text-center fst-italic">
+   <div>
+       <i class="fas fa-user">
+           <span>USER LOGIN</span>
+       </i>
+      <form th:action="@{/donor/login}" method="post" style="max-width: 350px; margin: 0 auto" autocomplete="off">
+          &nbsp;
+          <div class="error" th:if="${param.error}">
+                  <p class="text-danger">
+                  [[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]]
+                  </p>
+          </div>
+          &nbsp;
+          <div class="info" th:if="${param.logout}">
+              <p class="text-warning">You have been logged out.</p>
+          </div>
+          <div class="border border-secondary p-3 rounded">
+              <div>
+                  <p>
+                      <input type="email" id="email" name="email" class="form-control" placeholder="E-mail" required autofocus>
+                  </p>
+                  <p>
+                      <input type="password" id="password" name="password" class="form-control" autocomplete="new-password" placeholder="****" required>
+                  </p>
+                  <p class="text-start form-check form-switch">
+                      <input type="checkbox" name="remember-me" class="form-check-input"/>
+                      <label class="form-check-label">Remember Me</label>&nbsp;
+                  </p>
+                  &nbsp;
+                  <p>
+                      <input type="submit" value="login" class="btn btn-primary"/>
+                  </p>
+              </div>
+              <div style="text-align: center">
+                  <a href="#" th:href="@{/registration}" class="fas fa-link "> Not registered?Sign up here</a>
+              </div>
+          </div>
+      </form>
+   </div>
+</div>
+</body>
+<script>
+    $(document).ready(function (){
+       var id = $('#email');
+       id.prop('type', 'text');
+       id.removeAttr('autocomplete')
+    });
+</script>
+</html>

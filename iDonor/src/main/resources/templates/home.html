@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/font-awesome/5.15.4/css/font-awesome.min.css}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</head>
+<body>
+<div class="row">
+    <div class="col-75">
+        <div class="container">
+            <form method="post" action="/pay">
+                <div class="col-50">
+                    <h3>Payment</h3>
+                    <label>Accepted Cards</label>
+                    <div>
+                        <i class="fa fa-cc-visa"></i>
+                        <i class="fa fa-cc-amazon-pay"></i>
+                        <i class="fa fa-cc-discover"></i>
+                    </div>
+                    <label for="price">Total</label>
+                    <input type="text" id="price" name="price" value="10">
+                    <label for="currency">Total</label>
+                    <input type="text" id="currency" name="currency" placeholder="Enter Currency">
+                    <label for="method">Total</label>
+                    <input type="text" id="method" name="method" placeholder="Payment Method">
+                    <label for="intent">Total</label>
+                    <input type="text" id="intent" name="intent" value="sale">
+                    <label for="description">Total</label>
+                    <input type="text" id="description" name="description" placeholder="payment description">
+                </div>
+
+                <input type="submit" value="continue to checkout" class="btn">
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
